@@ -1,4 +1,4 @@
-![logo](./imgage/luyen_banner.png)
+![logo](./image/luyen_banner.png)
 
 # MVVMCleanArchitechture
 ## What's KOIN?
