@@ -31,11 +31,13 @@ class ItemUserViewHolder(view: View, var delegate: DelegateUser) : BaseViewHolde
             user.isBookmark = ischecked
             delegate.bookmarkUser(user, ischecked)
         }
+        viewBinding.background.setOnClickListener {
+            delegate.viewUserDetail(user)
+        }
         viewBinding.viewHolder = this
     }
 
     override fun onClick(p0: View?) {
-        delegate.viewUserDetail(user)
 
     }
 

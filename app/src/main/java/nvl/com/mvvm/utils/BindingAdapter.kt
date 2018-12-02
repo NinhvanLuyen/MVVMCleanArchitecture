@@ -7,8 +7,9 @@ object BindingAdapter {
     @JvmStatic
     @android.databinding.BindingAdapter("app:imageUrl")
     fun loadImage(view: SimpleDraweeView, imageUrl: String?) {
-        if (imageUrl!!.isNotEmpty())
-            view.setImageURI(imageUrl)
+        if (imageUrl != null)
+            if (imageUrl!!.isNotEmpty())
+                view.setImageURI(imageUrl)
     }
 
     @JvmStatic

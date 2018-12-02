@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.list_user_fragment.*
 import nvl.com.mvvm.R
@@ -16,6 +18,7 @@ import nvl.com.mvvm.ui.adapter.DelegateUser
 import nvl.com.mvvm.ui.adapter.RecyclerViewPaginator
 import nvl.com.mvvm.ui.adapter.UserAdapter
 import nvl.com.mvvm.ui.viewmodel.ListUserViewModel
+import timber.log.Timber
 
 class ListUserFragment : BaseFragment<ListUserViewModel.ViewModel>(ListUserViewModel.ViewModel::class), DelegateUser {
     override fun bookmarkUser(user: User, isChecked: Boolean) {
@@ -23,7 +26,8 @@ class ListUserFragment : BaseFragment<ListUserViewModel.ViewModel>(ListUserViewM
     }
 
     override fun viewUserDetail(user: User) {
-
+        Timber.e("Navigation_to_UserDEtail")
+        view!!.findNavController().navigate(R.id.to_detail,UserDetailFragment.getBundle(user))
     }
 
     override fun retry() {
@@ -38,17 +42,10 @@ class ListUserFragment : BaseFragment<ListUserViewModel.ViewModel>(ListUserViewM
     lateinit var viewBinding: ListUserFragmentBinding
     private var adapter = UserAdapter(this)
     private var adapterBookmarked = UserAdapter(this)
+    @SuppressLint("CheckResult")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         viewBinding = DataBindingUtil.inflate(inflater, R.layout.list_user_fragment, container, false)
-        return viewBinding.root
-    }
-
-    lateinit var recyclerViewPaginator: RecyclerViewPaginator
-
-    @SuppressLint("CheckResult")
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         viewBinding.viewModel = viewModel
         viewBinding.recyclerView.adapter = adapter
         var layoutManager = LinearLayoutManager(activity)
@@ -109,7 +106,10 @@ class ListUserFragment : BaseFragment<ListUserViewModel.ViewModel>(ListUserViewM
 
             }
         }
+        return viewBinding.root
     }
+
+    lateinit var recyclerViewPaginator: RecyclerViewPaginator
 
     fun size(s: String): Int {
         return s.toIntOrNull() ?: 0
