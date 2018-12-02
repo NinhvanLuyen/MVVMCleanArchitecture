@@ -1,9 +1,9 @@
-package nvl.com.mvvm.usecase
+package nvl.com.mvvm.domain
 
 import io.reactivex.schedulers.Schedulers
 import nvl.com.mvvm.data.entities.User
-import nvl.com.mvvm.data.room_repository.UserRepo
-import nvl.com.mvvm.services.api.ApiService
+import nvl.com.mvvm.data.local.room_repository.UserRepo
+import nvl.com.mvvm.data.remote.api.ApiService
 
 class UserUseCase(private val apiServices: ApiService, private val userRepo: UserRepo) {
     fun getListUser(page: Int) =

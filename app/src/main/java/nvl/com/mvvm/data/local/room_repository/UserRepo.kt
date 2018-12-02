@@ -1,10 +1,9 @@
-package nvl.com.mvvm.data.room_repository
+package nvl.com.mvvm.data.local.room_repository
 
 import android.app.Application
-import android.content.res.Resources
-import nvl.com.mvvm.data.MyRoomDB
+import nvl.com.mvvm.data.local.MyRoomDB
 import nvl.com.mvvm.data.entities.User
-import nvl.com.mvvm.data.room_dao.UserDao
+import nvl.com.mvvm.data.local.room_dao.UserDao
 import io.reactivex.Single
 import nvl.com.mvvm.utils.Utils
 

@@ -1,12 +1,10 @@
-package nvl.com.mvvm.services.transformer
+package nvl.com.mvvm.data.remote.api
 
 import io.reactivex.Single
 import io.reactivex.SingleSource
 import io.reactivex.SingleTransformer
 import nvl.com.mvvm.utils.ErrorCodes
-import nvl.com.mvvm.services.apierror.ApiError
-import nvl.com.mvvm.services.apierror.ApiException
-import nvl.com.mvvm.services.model.LoadMoreData
+import nvl.com.mvvm.data.remote.base_model.LoadMoreData
 
 /**
  * Created by ninhvanluyen on 16/11/18.

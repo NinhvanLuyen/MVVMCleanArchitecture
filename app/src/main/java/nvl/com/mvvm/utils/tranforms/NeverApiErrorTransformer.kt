@@ -3,7 +3,7 @@ package nvl.com.mvvm.utils.tranforms
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.ObservableTransformer
-import nvl.com.mvvm.services.apierror.ApiError
+import nvl.com.mvvm.data.remote.api.ApiError
 
 class NeverApiErrorTransformer<T> : ObservableTransformer<T, T> {
 

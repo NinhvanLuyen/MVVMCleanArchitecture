@@ -1,4 +1,4 @@
-package nvl.com.mvvm.services.model
+package nvl.com.mvvm.data.remote.base_model
 
 class LoadMoreData<T> {
     private var items:ArrayList<T>?  = arrayListOf<T>()

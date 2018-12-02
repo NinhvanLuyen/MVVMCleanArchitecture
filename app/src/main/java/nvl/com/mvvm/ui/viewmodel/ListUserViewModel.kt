@@ -1,15 +1,13 @@
 package nvl.com.mvvm.ui.viewmodel
 
 import android.databinding.ObservableField
-import android.view.View
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
-import nvl.com.mvvm.services.model.LoadMoreData
+import nvl.com.mvvm.data.remote.base_model.LoadMoreData
 import nvl.com.mvvm.data.entities.User
-import nvl.com.mvvm.usecase.UserUseCase
+import nvl.com.mvvm.domain.UserUseCase
 import nvl.com.mvvm.utils.tranforms.Transformers
-import timber.log.Timber
 
 interface ListUserViewModel {
     class Data {

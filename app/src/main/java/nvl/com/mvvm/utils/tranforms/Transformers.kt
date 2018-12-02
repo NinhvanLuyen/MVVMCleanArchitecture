@@ -2,7 +2,7 @@ package nvl.com.mvvm.utils.tranforms
 
 import io.reactivex.Observable
 import io.reactivex.subjects.Subject
-import nvl.com.mvvm.services.apierror.ApiError
+import nvl.com.mvvm.data.remote.api.ApiError
 
 object Transformers {
 

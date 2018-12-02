@@ -3,14 +3,6 @@ package nvl.com.mvvm.utils
 object Configs {
     val IS_DEBUG = true
     val SERVER_URL = "https://api.stackexchange.com/2.2/"
-    val CONNECTION_TIME_OUT: Long = 15
-    val READ_TIME_OUT: Long = 15
-}
-
-object Constants {
-    val FIRST_PAGE = 1
-    val LAST_PAGE = "-1"
-    val PAGE_LENGTH = 20
 }
 
 object ErrorCodes {

@@ -1,15 +1,12 @@
-package nvl.com.mvvm.services.api
+package nvl.com.mvvm.data.remote.api
 
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import nvl.com.mvvm.utils.ErrorCodes
 import nvl.com.mvvm.utils.ErrorMessage
-import nvl.com.mvvm.services.apierror.ApiError
-import nvl.com.mvvm.services.apierror.ApiException
 import nvl.com.mvvm.utils.DeviceUtils
-import nvl.com.mvvm.services.model.LoadMoreData
+import nvl.com.mvvm.data.remote.base_model.LoadMoreData
 import nvl.com.mvvm.data.entities.User
-import nvl.com.mvvm.services.transformer.ApiTransformer
 
 class ApiServiceImp(val httpRepository: HttpRepository) : ApiService
 {

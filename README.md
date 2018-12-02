@@ -1,33 +1,32 @@
 ![logo](./image/luyen_banner.png)
 
 # MVVMCleanArchitechture
-## What's KOIN?
+## What's PROJECT?
+This repository contains a detailed sample app that implements MVVM architecture using Koin, Room, RxJava
+### The app has following packages:
+1. **data**: It contains all the data accessing and manipulating components.
+2. **di**: Dependency providing classes using Koin.
+3. **domain**: All usecase of application
+4. **ui**: View classes along with their corresponding ViewModel ,dialog and adapter of views.
+5. **utils**: Utility classes.
 
-Koin is a small library to lets you write dependency injection in a concise and pragmatic way. No proxy, no code generation, no introspection. Just DSL and functional Kotlin magic!
+<p align="center">
+  <img src="./image/screenshot1.jpg" width="250">
+  <img src="./image/screenshot2.jpg" width="250">
+</p>
+<br>
 
-#### *Declare, Start & Inject*
-
-
-## insert-koin.io
-
-#### All documentation, sample and references has been move to our website. Check the official website to get started: [insert-koin.io](https://insert-koin.io)
-
-
-## Koin Samples
+### Feature of App
+1. List out all of SOF(StackOverFlow) user list. User must be able to scroll down to see all of SOF user.
+2. User can bookmark / de-bookmark a SOF user.
+3. Provide option for user to see only SOF user that has been bookmarked.
+4. User can click on any SOF user to see their detail reputation.
 
 In this repository you will found samples project to help you understand how to use Koin with several technologies.
 
 #### [Android MVVM StackOverflow Users app](https://github.com/ninhvanluyen)
 
 An Android app for getting user data from stackOverflow, in MVVM architecture style and RxJava, databinding and Koin
-
-
-#### [Kotlin standalone app](linkapk --updating)
-
-## Follow us & Contact
-
-### Medium - [Koin Developers Hub](https://medium.com/koin-luyen-developer)
-
 
 
 

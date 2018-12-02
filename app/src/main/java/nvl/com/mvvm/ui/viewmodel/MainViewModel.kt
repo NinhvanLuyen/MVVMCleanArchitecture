@@ -1,6 +1,6 @@
 package nvl.com.mvvm.ui.viewmodel
 
-import nvl.com.mvvm.usecase.UserUseCase
+import nvl.com.mvvm.domain.UserUseCase
 
 interface MainViewModel {
 

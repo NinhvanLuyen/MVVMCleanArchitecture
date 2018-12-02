@@ -1,4 +1,4 @@
-package nvl.com.mvvm.services.apierror
+package nvl.com.mvvm.data.remote.api
 import nvl.com.mvvm.utils.ErrorCodes
 import nvl.com.mvvm.utils.ErrorMessage
 import retrofit2.HttpException
@@ -25,7 +25,8 @@ class ApiError(private val errorCode: Int, val errorMessage: String) {
             } else {
                 Timber.e(throwable, throwable.message)
                 Timber.e("Unknow Exception")
-                return ApiError(ErrorCodes.NET_WORK_PROBLEM, throwable.message ?: ErrorMessage.NET_WORK_PROBLEM)
+                return ApiError(ErrorCodes.NET_WORK_PROBLEM, throwable.message
+                        ?: ErrorMessage.NET_WORK_PROBLEM)
             }
         }
     }

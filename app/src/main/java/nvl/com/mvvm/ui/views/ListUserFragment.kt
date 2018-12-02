@@ -16,7 +16,6 @@ import nvl.com.mvvm.ui.adapter.DelegateUser
 import nvl.com.mvvm.ui.adapter.RecyclerViewPaginator
 import nvl.com.mvvm.ui.adapter.UserAdapter
 import nvl.com.mvvm.ui.viewmodel.ListUserViewModel
-import nvl.com.mvvm.utils.tranforms.Transformers
 
 class ListUserFragment : BaseFragment<ListUserViewModel.ViewModel>(ListUserViewModel.ViewModel::class), DelegateUser {
     override fun bookmarkUser(user: User, isChecked: Boolean) {
@@ -61,16 +60,6 @@ class ListUserFragment : BaseFragment<ListUserViewModel.ViewModel>(ListUserViewM
         var observable = android.arch.lifecycle.Observer<List<User>> {
             adapter.searchAndNotifyItemChange(it!!.toMutableList())
             adapterBookmarked.searchAndNotifyItemChangeForBookmarkList(it.toMutableList())
-//            if (it.isEmpty()) {
-//                viewDataBinding.filter.visibility = View.GONE
-//                viewDataBinding.recyclerView.visibility = View.VISIBLE
-//                viewDataBinding.recyclerViewBookmarked.visibility = View.GONE
-//                viewDataBinding.iconFilter.isLiked = false
-//            } else {
-//                viewDataBinding.filter.visibility = View.VISIBLE
-//
-//            }
-
         }
 
         viewModel.getListLiveData().observe(this, observable)
@@ -102,21 +91,21 @@ class ListUserFragment : BaseFragment<ListUserViewModel.ViewModel>(ListUserViewM
                 recyclerViewPaginator.start()
                 viewModel.input.swipeRefresh()
             } else {
-                swipeRefresh.isRefreshing = false
+                viewBinding.swipeRefresh.isRefreshing = false
             }
         }
-        btnRetry.setOnClickListener {
+        viewBinding.btnRetry.setOnClickListener {
             adapter.removeData()
             recyclerViewPaginator.start()
             viewModel.input.swipeRefresh()
         }
-        showOnlyBookmarked.setOnCheckedChangeListener { _, ischecked ->
+        viewBinding.showOnlyBookmarked.setOnCheckedChangeListener { _, ischecked ->
             if (ischecked) {
-                recyclerViewBookmarked.visibility = View.VISIBLE
-                recyclerView.visibility = View.GONE
+                viewBinding.recyclerViewBookmarked.visibility = View.VISIBLE
+                viewBinding.recyclerView.visibility = View.GONE
             } else {
-                recyclerViewBookmarked.visibility = View.GONE
-                recyclerView.visibility = View.VISIBLE
+                viewBinding.recyclerViewBookmarked.visibility = View.GONE
+                viewBinding.recyclerView.visibility = View.VISIBLE
 
             }
         }

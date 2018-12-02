@@ -1,4 +1,4 @@
-package nvl.com.mvvm.data.room_dao
+package nvl.com.mvvm.data.local.room_dao
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao

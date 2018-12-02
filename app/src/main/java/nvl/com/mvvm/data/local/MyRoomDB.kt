@@ -1,11 +1,11 @@
-package nvl.com.mvvm.data
+package nvl.com.mvvm.data.local
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import nvl.com.mvvm.data.entities.User
-import nvl.com.mvvm.data.room_dao.UserDao
+import nvl.com.mvvm.data.local.room_dao.UserDao
 
 @Database(entities = [(User::class)], version = 1)
 abstract class MyRoomDB : RoomDatabase() {

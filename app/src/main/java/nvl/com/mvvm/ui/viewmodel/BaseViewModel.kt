@@ -10,8 +10,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
-import nvl.com.mvvm.services.apierror.ApiError
-import nvl.com.mvvm.usecase.UserUseCase
+import nvl.com.mvvm.data.remote.api.ApiError
+import nvl.com.mvvm.domain.UserUseCase
 
 open class BaseViewModel(val userUseCase: UserUseCase) : ViewModel(), LifecycleObserver {
     val disposables = CompositeDisposable()
