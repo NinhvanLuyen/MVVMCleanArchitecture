@@ -12,7 +12,7 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-       var test = nvl.com.mvvm.ui.main.Test()
+       var test = nvl.com.mvvm.ui.views.Test()
         test.list.add("")
         intArrayOf(1,3)
         assertEquals(test.list.size, 3)

@@ -1,9 +1,10 @@
 package nvl.com.mvvm
 
 import android.app.Application
+import com.facebook.drawee.backends.pipeline.Fresco
 import nvl.com.mvvm.di.appModule
 import nvl.com.mvvm.di.repoModule
-import nvl.com.mvvm.libs.Configs
+import nvl.com.mvvm.utils.Configs
 import org.koin.android.ext.android.startKoin
 import timber.log.Timber
 
@@ -16,6 +17,7 @@ class MyApplication : Application() {
         super.onCreate()
         app = this
         initializeTimber()
+        Fresco.initialize(this)
         startKoin(this, listOf(appModule, repoModule))
     }
     private fun initializeTimber() {

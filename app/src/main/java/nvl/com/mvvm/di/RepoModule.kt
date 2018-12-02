@@ -1,17 +1,15 @@
 package nvl.com.mvvm.di
 
 import android.content.Context
+import nvl.com.mvvm.MyApplication
+import nvl.com.mvvm.data.room_repository.UserRepo
 import nvl.com.mvvm.di.DatasourceProperties.SERVER_URL
 import nvl.com.mvvm.services.api.ApiService
 import nvl.com.mvvm.services.api.ApiServiceImp
 import nvl.com.mvvm.services.api.HttpRepository
-import nvl.com.mvvm.services.local.LocalService
-import nvl.com.mvvm.services.local.LocalServiceImp
 import nvl.com.mvvm.usecase.UserUseCase
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.android.ext.koin.androidContext
-import org.koin.dsl.module.applicationContext
 import org.koin.dsl.module.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -23,7 +21,7 @@ val repoModule = module {
     single { createOkHttpClient() }
     single { createWebService<HttpRepository>(get(), SERVER_URL) }
     single { createApiService(get()) }
-    single { createLocalService(androidContext()) }
+    single { createUserRepo() }
     single { createUsercase(get(), get()) }
 
 }
@@ -34,7 +32,7 @@ object DatasourceProperties {
 }
 
 fun createApiService(httpRepository: HttpRepository): ApiService = ApiServiceImp(httpRepository)
-fun createLocalService(context: Context): LocalService = LocalServiceImp(context)
+fun createUserRepo(): UserRepo  = UserRepo(MyApplication.app)
 
 fun createOkHttpClient(): OkHttpClient {
     val httpLoggingInterceptor = HttpLoggingInterceptor()
@@ -54,4 +52,4 @@ inline fun <reified T> createWebService(okHttpClient: OkHttpClient, url: String)
     return retrofit.create(T::class.java)
 }
 
-fun createUsercase(apiService: ApiService, localService: LocalService) = UserUseCase(apiService, localService)
+fun createUsercase(apiService: ApiService, userRepo: UserRepo) = UserUseCase(apiService, userRepo)

@@ -1,7 +1,7 @@
 package nvl.com.mvvm.services.model
 
 class LoadMoreData<T> {
-    private var items:ArrayList<T>  = arrayListOf<T>()
+    private var items:ArrayList<T>?  = arrayListOf<T>()
     private var quota_max = 0
     private var quota_remaining = 0
     private var has_more = false
