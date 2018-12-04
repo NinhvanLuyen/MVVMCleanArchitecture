@@ -8,6 +8,7 @@ import nvl.com.mvvm.data.remote.base_model.LoadMoreData
 import nvl.com.mvvm.data.entities.User
 import nvl.com.mvvm.domain.UserUseCase
 import nvl.com.mvvm.utils.tranforms.Transformers
+import timber.log.Timber
 
 interface ListUserViewModel {
     class Data {
@@ -45,30 +46,33 @@ interface ListUserViewModel {
         var error = this
         private var lsTerm = mutableListOf<User>()
         private var listDataUserBookmarkedTerm = mutableListOf<User>()
-        private var renderData = BehaviorSubject.create<Pair<MutableList<User>, Boolean>>()
-        private var renderDataUserBookmarked = BehaviorSubject.create<MutableList<User>>()
+        private var renderData = PublishSubject.create<Pair<MutableList<User>, Boolean>>()
+        private var renderDataUserBookmarked = PublishSubject.create<MutableList<User>>()
         private var nextPage = PublishSubject.create<Boolean>()
         private var addItemErrorBottomList = PublishSubject.create<Boolean>()
         private var callApi = PublishSubject.create<Int>()
         private var currentPage = 1
         private var canLoadmore = false
         override fun renderListUser(): Observable<Pair<MutableList<User>, Boolean>> = renderData
-        override fun renderListUserBookmarked(): Observable<MutableList<User>> =renderDataUserBookmarked
+        override fun renderListUserBookmarked(): Observable<MutableList<User>> = renderDataUserBookmarked
 
 
         private lateinit var loadData: Observable<LoadMoreData<User>>
 
         init {
             data.showLoading.set(true)
-            arguments.subscribe {
+            arguments.compose(bindTolifecycle())
+                    .subscribe {
+                        Timber.e("flow 1: onNextArgument")
                 if (lsTerm.isEmpty()) {
+
                     callApi.onNext(currentPage)
                     nextPage.onNext(true)
+
                 } else {
                     renderData.onNext(Pair(lsTerm, canLoadmore))
                 }
-                if (listDataUserBookmarkedTerm.isNotEmpty())
-                {
+                if (listDataUserBookmarkedTerm.isNotEmpty()) {
                     renderDataUserBookmarked.onNext(listDataUserBookmarkedTerm)
                 }
             }!!
@@ -103,6 +107,9 @@ interface ListUserViewModel {
                         lsTerm.addAll(it.getDatas()!!.toMutableList())
                         renderData.onNext(Pair(it.getDatas()!!.toMutableList(), canLoadmore))
                     }
+            disposables.add(loadData.subscribe())
+            Timber.e("flow 2: loadDAta subscribe")
+
             disposables.add(userUseCase.getListBookMarkUser()
                     .compose(Transformers.pipeApiErrorTo(apiError))
                     .compose(bindTolifecycle())
@@ -111,7 +118,6 @@ interface ListUserViewModel {
                         renderDataUserBookmarked.onNext(it)
                         listDataUserBookmarkedTerm.addAll(it)
                     })
-            disposables.add(loadData.subscribe())
 
 
         }

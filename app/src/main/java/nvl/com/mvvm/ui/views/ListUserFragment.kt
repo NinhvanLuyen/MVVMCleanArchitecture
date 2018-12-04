@@ -1,6 +1,7 @@
 package nvl.com.mvvm.ui.views
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -9,7 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.list_user_fragment.*
 import nvl.com.mvvm.R
 import nvl.com.mvvm.databinding.ListUserFragmentBinding
@@ -27,7 +30,8 @@ class ListUserFragment : BaseFragment<ListUserViewModel.ViewModel>(ListUserViewM
 
     override fun viewUserDetail(user: User) {
         Timber.e("Navigation_to_UserDEtail")
-        view!!.findNavController().navigate(R.id.to_detail,UserDetailFragment.getBundle(user))
+        disposables.clear()
+        NavHostFragment.findNavController(this).navigate(R.id.to_detail, UserDetailFragment.getBundle(user))
     }
 
     override fun retry() {
@@ -35,18 +39,32 @@ class ListUserFragment : BaseFragment<ListUserViewModel.ViewModel>(ListUserViewM
         viewModel.input.retryOnErrorItem()
     }
 
-    companion object {
-        fun newInstance() = ListUserFragment()
-    }
-
     lateinit var viewBinding: ListUserFragmentBinding
     private var adapter = UserAdapter(this)
     private var adapterBookmarked = UserAdapter(this)
     @SuppressLint("CheckResult")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         viewBinding = DataBindingUtil.inflate(inflater, R.layout.list_user_fragment, container, false)
         viewBinding.viewModel = viewModel
+        Timber.e("onCreateView")
+
+        return viewBinding.root
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        Timber.e("onAttach")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Timber.e("onDetach")
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Timber.e("onViewCreated")
         viewBinding.recyclerView.adapter = adapter
         var layoutManager = LinearLayoutManager(activity)
         var ll = LinearLayoutManager(activity)
@@ -58,30 +76,30 @@ class ListUserFragment : BaseFragment<ListUserViewModel.ViewModel>(ListUserViewM
             adapter.searchAndNotifyItemChange(it!!.toMutableList())
             adapterBookmarked.searchAndNotifyItemChangeForBookmarkList(it.toMutableList())
         }
-
         viewModel.getListLiveData().observe(this, observable)
+        disposables.add(
+                viewModel.error.addItemErrorBottomList()
+                        .compose(bindTolifecycle())
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .subscribe {
+                            if (it)
+                                adapter.addErrorItem()
+                            else
+                                adapter.addLoading()
+                        })
+        disposables.add(
+                viewModel.output.renderListUser()
+                        .compose(bindTolifecycle())
+                        .subscribe {
+                            adapter.addData(it.first, it.second)
+                            Timber.e("flow 3: render")
 
-        viewModel.error.addItemErrorBottomList()
+                        })
+        disposables.add(viewModel.output.renderListUserBookmarked()
                 .compose(bindTolifecycle())
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    if (it)
-                        adapter.addErrorItem()
-                    else
-                        adapter.addLoading()
-                }
-        viewModel.output.renderListUser()
-                .compose(bindTolifecycle())
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    adapter.addData(it.first, it.second)
-                }
-        viewModel.output.renderListUserBookmarked()
-                .compose(bindTolifecycle())
-                .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     adapterBookmarked.addData(it)
-                }
+                })
         viewBinding.swipeRefresh.setOnRefreshListener {
             if (!showOnlyBookmarked.isChecked) {
                 adapter.removeData()
@@ -97,22 +115,32 @@ class ListUserFragment : BaseFragment<ListUserViewModel.ViewModel>(ListUserViewM
             viewModel.input.swipeRefresh()
         }
         viewBinding.showOnlyBookmarked.setOnCheckedChangeListener { _, ischecked ->
-            if (ischecked) {
-                viewBinding.recyclerViewBookmarked.visibility = View.VISIBLE
-                viewBinding.recyclerView.visibility = View.GONE
-            } else {
-                viewBinding.recyclerViewBookmarked.visibility = View.GONE
-                viewBinding.recyclerView.visibility = View.VISIBLE
-
-            }
+            viewModel.data.showOnlyBookmarked.set(ischecked)
         }
-        return viewBinding.root
     }
 
     lateinit var recyclerViewPaginator: RecyclerViewPaginator
 
     fun size(s: String): Int {
         return s.toIntOrNull() ?: 0
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Timber.e("onResume")
+        Timber.e("checbox ${viewBinding.showOnlyBookmarked.isChecked}")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Timber.e("onStop")
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.e("onDestroy")
+
     }
 
 }

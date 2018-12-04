@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/listUser"
         android:name="nvl.com.mvvm.ui.views.ListUserFragment"
-        android:label="fragment_login"
+        android:label="fragment_list_user"
         tools:layout="@layout/list_user_fragment">
         <action
             android:id="@+id/to_detail"

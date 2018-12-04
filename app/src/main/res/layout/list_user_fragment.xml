@@ -50,8 +50,8 @@
             android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:isRefresh="@{viewModel.data.isRefresh}"
             android:layout_margin="@dimen/activity_ssmall_margin"
+            app:isRefresh="@{viewModel.data.isRefresh}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <FrameLayout
@@ -63,8 +63,7 @@
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{(viewModel.data.showLoading||viewModel.data.loadDataError)?View.GONE:View.VISIBLE, default= visible}" />
-
+                    android:visibility="@{(viewModel.data.showLoading||viewModel.data.loadDataError||viewModel.data.showOnlyBookmarked)?View.GONE:View.VISIBLE, default= visible}" />
 
 
                 <TextView
@@ -109,19 +108,20 @@
 
                     <Button
                         android:id="@+id/btnRetry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="100dp"
                         android:text="@string/try_again"
-                        android:textColor="@color/colorPrimary"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"/>
+                        android:textColor="@color/colorPrimary" />
                 </LinearLayout>
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerViewBookmarked"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                    android:visibility="gone"/>
+                    android:visibility="@{viewModel.data.showOnlyBookmarked?View.VISIBLE:View.GONE, default= gone}"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
             </FrameLayout>
         </android.support.v4.widget.SwipeRefreshLayout>
     </android.support.design.widget.CoordinatorLayout>

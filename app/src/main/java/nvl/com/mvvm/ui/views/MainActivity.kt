@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import nvl.com.mvvm.R
 import nvl.com.mvvm.ui.viewmodel.MainViewModel
+import androidx.navigation.Navigation
+
+
 
 class MainActivity : BaseActivity<MainViewModel.ViewModel>(MainViewModel.ViewModel::class) {
 
@@ -22,6 +25,10 @@ class MainActivity : BaseActivity<MainViewModel.ViewModel>(MainViewModel.ViewMod
                     .setPrimaryNavigationFragment(defaultFragment)
                     .commit()
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return Navigation.findNavController(this, R.id.listUser).navigateUp()
     }
 
 }

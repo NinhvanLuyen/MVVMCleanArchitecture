@@ -16,7 +16,7 @@ import nvl.com.mvvm.domain.UserUseCase
 open class BaseViewModel(val userUseCase: UserUseCase) : ViewModel(), LifecycleObserver {
     val disposables = CompositeDisposable()
     protected var apiError = BehaviorSubject.create<ApiError>()
-    protected val arguments = PublishSubject.create<Bundle>()
+    protected val arguments = BehaviorSubject.create<Bundle>()
 
     fun addObserver(lifecycle: Lifecycle) {
         lifecycle.addObserver(this)
