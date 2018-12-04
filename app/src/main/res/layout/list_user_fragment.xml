@@ -20,6 +20,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_margin="@dimen/activity_small_margin"
+                    android:layout_marginLeft="@dimen/activity_small_margin"
+                    android:gravity="center"
+                    android:text="@string/list_user"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_textview_l" />
+            </FrameLayout>
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar"

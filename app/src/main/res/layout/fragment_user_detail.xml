@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="nvl.com.mvvm.ui.viewmodel.UserDetailViewModel.ViewModel" />
@@ -51,6 +53,30 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/activity_ssmall_margin"
                         android:orientation="vertical">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/activity_small_margin"
+                                android:gravity="center"
+                                android:text="@string/user_detail"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_size_textview_l" />
+
+                            <ImageButton
+                                android:id="@+id/btnBack"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_margin="@dimen/activity_small_margin"
+                                android:background="@null"
+                                android:src="@drawable/ic_back" />
+                        </FrameLayout>
 
                         <com.facebook.drawee.view.SimpleDraweeView
                             android:id="@+id/avatar"
@@ -118,10 +144,69 @@
             android:layout_margin="@dimen/activity_ssmall_margin"
             app:isRefresh="@{viewModel.data.isRefresh}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
-            <android.support.v7.widget.RecyclerView
+
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/recyclerView"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{(viewModel.data.showLoading||viewModel.data.loadDataError)?View.GONE:View.VISIBLE, default= visible}" />
+
+
+                <TextView
+                    style="@style/TextViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:text="@string/no_data"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:visibility="@{viewModel.data.noData?View.VISIBLE:View.GONE, default= gone}" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{viewModel.data.showLoading?View.VISIBLE:View.GONE, default= gone}">
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+                </FrameLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:visibility="@{viewModel.data.loadDataError?View.VISIBLE:View.GONE, default= gone}">
+
+
+                    <TextView
+                        style="@style/TextViewStyle"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="@dimen/activity_margin"
+                        android:layout_marginRight="@dimen/activity_margin"
+                        android:text="@{viewModel.data.errorMessage}"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_size_textview_l" />
+
+                    <Button
+                        android:id="@+id/btnRetry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="100dp"
+                        android:text="@string/try_again"
+                        android:textColor="@color/colorPrimary" />
+                </LinearLayout>
+            </FrameLayout>
         </android.support.v4.widget.SwipeRefreshLayout>
     </android.support.design.widget.CoordinatorLayout>
 

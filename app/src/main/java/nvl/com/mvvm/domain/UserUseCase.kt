@@ -20,7 +20,7 @@ class UserUseCase(private val apiServices: ApiService, private val userRepo: Use
                                         }
                                 }
                     }
-
+    fun getListReputation(page: Int, userId: String) = apiServices.getReputation(page, userId).toObservable()
     fun bookMarkUser(user: User) = userRepo.insert(user).toObservable().subscribeOn(Schedulers.io())
     fun getListBookMarkUser() = userRepo.getAll().toObservable().subscribeOn(Schedulers.io())
     fun unBookMarkUser(user: User) = userRepo.deleteUser(user).toObservable().subscribeOn(Schedulers.io())

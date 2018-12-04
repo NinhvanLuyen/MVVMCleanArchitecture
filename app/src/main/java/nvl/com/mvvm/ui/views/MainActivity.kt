@@ -30,5 +30,4 @@ class MainActivity : BaseActivity<MainViewModel.ViewModel>(MainViewModel.ViewMod
     override fun onSupportNavigateUp(): Boolean {
         return Navigation.findNavController(this, R.id.listUser).navigateUp()
     }
-
 }

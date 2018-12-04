@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewHolder"
+            type="nvl.com.mvvm.ui.adapter.viewholders.ItemReputationViewHolder" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_selector"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_ssmall_margin"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/activity_ssmall_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_small_margin"
+                    android:layout_marginBottom="@dimen/activity_small_margin"
+                    android:text="@{viewHolder.reputationType}" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/activity_ssmall_margin"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_date"
+                        android:drawablePadding="1dp"
+                        android:gravity="start|center_vertical"
+                        android:maxLines="2"
+
+                        android:text="@{viewHolder.date}"
+                        tools:text="10/2/2018" />
+
+                    <TextView
+                        style="@style/TextViewStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/activity_ssmall_margin"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_post"
+                        android:drawablePadding="1dp"
+                        android:gravity="start"
+                        android:maxLines="2"
+                        android:text="@{viewHolder.postId}"
+                        tools:text="post_id" />
+
+                    <TextView
+                        style="@style/TextViewStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/activity_ssmall_margin"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_change"
+                        android:drawablePadding="1dp"
+                        android:gravity="start"
+                        android:maxLines="2"
+                        android:text="@{viewHolder.changeHistory}"
+                        tools:text="change_id" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View style="@style/line_small" />
+    </LinearLayout>
+</layout>

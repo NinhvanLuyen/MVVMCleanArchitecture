@@ -2,6 +2,7 @@ package nvl.com.mvvm.data.remote.api
 
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import nvl.com.mvvm.data.entities.Reputation
 import nvl.com.mvvm.utils.ErrorCodes
 import nvl.com.mvvm.utils.ErrorMessage
 import nvl.com.mvvm.utils.DeviceUtils
@@ -20,6 +21,21 @@ class ApiServiceImp(val httpRepository: HttpRepository) : ApiService
                 option.put("pagesize", "30")
                 option.put("site", "stackoverflow")
                 httpRepository.getListUsers(option)
+                        .compose(ApiTransformer())
+                        .subscribeOn(Schedulers.io())
+            }
+        }
+    }
+    override fun getReputation(page: Int,userID:String): Single<LoadMoreData<Reputation>> {
+        return Single.defer {
+            if (!DeviceUtils.isNetworkAvailable()) {
+                Single.error(ApiException(ApiError(ErrorCodes.NET_WORK_PROBLEM, ErrorMessage.NET_WORK_PROBLEM)))
+            } else {
+                val option = HashMap<String, String>()
+                option.put("page", "$page")
+                option.put("pagesize", "30")
+                option.put("site", "stackoverflow")
+                httpRepository.getListReputation(userID,option)
                         .compose(ApiTransformer())
                         .subscribeOn(Schedulers.io())
             }

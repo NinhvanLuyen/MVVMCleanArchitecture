@@ -1,5 +1,6 @@
 package nvl.com.mvvm.utils
 
+import java.text.SimpleDateFormat
 import java.util.*
 
 object Utils {
@@ -56,5 +57,13 @@ object Utils {
         }
     }
     fun getTime(): Long = GregorianCalendar.getInstance().time.time
+    fun convertLongToStringDate(date: Long): String {
+        var fm = SimpleDateFormat("dd-MM-yyyy")
+        var calendar = Calendar.getInstance()
+        calendar.time = Date(date)
+        calendar.add(Calendar.SECOND, date.toInt())
+        var date = calendar.time
+        return fm.format(date)
+    }
 
 }
