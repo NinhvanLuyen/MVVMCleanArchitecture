@@ -1,6 +1,6 @@
 ![logo](./image/luyen_banner.png)
 
-# MVVMCleanArchitechture
+# MVVMCleanArchitecture
 ## What's PROJECT?
 This repository contains a detailed sample app that implements MVVM architecture using Koin, Room, RxJava
 ### The app has following packages:
