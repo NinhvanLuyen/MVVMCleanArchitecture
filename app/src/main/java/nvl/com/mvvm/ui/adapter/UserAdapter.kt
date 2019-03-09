@@ -158,6 +158,7 @@ class UserAdapter(var delegate: DelegateUser) : BaseAdapter() {
             }
         }
     }
+    fun getSizeList() =sections[DATA].size
 
 }
 

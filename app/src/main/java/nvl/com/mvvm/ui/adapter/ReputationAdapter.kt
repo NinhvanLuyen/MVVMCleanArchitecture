@@ -59,6 +59,8 @@ class ReputationAdapter(var delegateUser: DelegateUser) : BaseAdapter() {
         }
     }
 
+    fun getSizeList() =sections[DATA].size
+
     fun removeData() {
         setSection(DATA, mutableListOf<Reputation>())
         setSection(LOAD, mutableListOf<Any>())

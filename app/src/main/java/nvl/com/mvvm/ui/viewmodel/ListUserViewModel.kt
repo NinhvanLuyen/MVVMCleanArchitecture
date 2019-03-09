@@ -14,7 +14,6 @@ interface ListUserViewModel {
     class Data {
         var showOnlyBookmarked = ObservableField<Boolean>(false)
         var showLoading = ObservableField<Boolean>(false)
-        var noData = ObservableField<Boolean>(false)
         var isRefresh = ObservableField<Boolean>(false)
         var loadDataError = ObservableField<Boolean>(false)
         var errorMessage = ObservableField<String>("")
@@ -40,17 +39,17 @@ interface ListUserViewModel {
 
 
     class ViewModel(userUseCase: UserUseCase) : BaseViewModel(userUseCase), OutPut, Input, Error {
-        var data = Data()
-        var input = this
-        var output = this
-        var error = this
+        val data = Data()
+        val input = this
+        val output = this
+        val error = this
         private var lsTerm = mutableListOf<User>()
         private var listDataUserBookmarkedTerm = mutableListOf<User>()
-        private var renderData = PublishSubject.create<Pair<MutableList<User>, Boolean>>()
-        private var renderDataUserBookmarked = PublishSubject.create<MutableList<User>>()
-        private var nextPage = PublishSubject.create<Boolean>()
-        private var addItemErrorBottomList = PublishSubject.create<Boolean>()
-        private var callApi = PublishSubject.create<Int>()
+        private val renderData = PublishSubject.create<Pair<MutableList<User>, Boolean>>()
+        private val renderDataUserBookmarked = PublishSubject.create<MutableList<User>>()
+        private val nextPage = PublishSubject.create<Boolean>()
+        private val addItemErrorBottomList = PublishSubject.create<Boolean>()
+        private val callApi = PublishSubject.create<Int>()
         private var currentPage = 1
         private var canLoadmore = false
         override fun renderListUser(): Observable<Pair<MutableList<User>, Boolean>> = renderData
@@ -114,7 +113,6 @@ interface ListUserViewModel {
                     .compose(Transformers.pipeApiErrorTo(apiError))
                     .compose(bindTolifecycle())
                     .subscribe {
-                        data.noData.set(it.isEmpty())
                         renderDataUserBookmarked.onNext(it)
                         listDataUserBookmarkedTerm.addAll(it)
                     })

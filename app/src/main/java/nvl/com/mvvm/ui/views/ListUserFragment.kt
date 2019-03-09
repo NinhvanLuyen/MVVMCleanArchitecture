@@ -8,11 +8,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.list_user_fragment.*
 import nvl.com.mvvm.R
 import nvl.com.mvvm.databinding.ListUserFragmentBinding
@@ -37,6 +34,7 @@ class ListUserFragment : BaseFragment<ListUserViewModel.ViewModel>(ListUserViewM
     override fun retry() {
         adapter.addLoading()
         viewModel.input.retryOnErrorItem()
+
     }
 
     lateinit var viewBinding: ListUserFragmentBinding
@@ -91,6 +89,7 @@ class ListUserFragment : BaseFragment<ListUserViewModel.ViewModel>(ListUserViewM
                 viewModel.output.renderListUser()
                         .compose(bindTolifecycle())
                         .subscribe {
+                            visibleNoData(it.first.isEmpty())
                             adapter.addData(it.first, it.second)
                             Timber.e("flow 3: render")
 
@@ -98,6 +97,7 @@ class ListUserFragment : BaseFragment<ListUserViewModel.ViewModel>(ListUserViewM
         disposables.add(viewModel.output.renderListUserBookmarked()
                 .compose(bindTolifecycle())
                 .subscribe {
+                    visibleNoData(it.isEmpty())
                     adapterBookmarked.addData(it)
                 })
         viewBinding.swipeRefresh.setOnRefreshListener {
@@ -115,8 +115,20 @@ class ListUserFragment : BaseFragment<ListUserViewModel.ViewModel>(ListUserViewM
             viewModel.input.swipeRefresh()
         }
         viewBinding.showOnlyBookmarked.setOnCheckedChangeListener { _, ischecked ->
+            if (ischecked)
+                visibleNoData(adapterBookmarked.getSizeList() == 0)
+            else
+                visibleNoData(adapter.getSizeList() == 0)
             viewModel.data.showOnlyBookmarked.set(ischecked)
+
         }
+    }
+
+    private fun visibleNoData(isEmpty: Boolean) {
+        tvNoData.visibility = if (showOnlyBookmarked.isChecked && isEmpty)
+            View.VISIBLE
+        else
+            View.GONE
     }
 
     lateinit var recyclerViewPaginator: RecyclerViewPaginator
